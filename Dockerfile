@@ -1,7 +1,7 @@
 # sudo docker kill $(sudo docker ps -q);  sudo docker rm $(sudo docker ps -a -q); sudo docker rmi $(sudo docker images -q)
 # sudo docker build --squash --no-cache -t 032401129069.dkr.ecr.ca-central-1.amazonaws.com/jupyterhub:jupyterlab-open .
 
-ARG BASE_CONTAINER=jupyter/datascience-notebook
+ARG BASE_CONTAINER=jupyter/datascience-notebook:hub-3.1.0
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Rahim Khoja <rahim.khoja@ubc.ca>"
@@ -30,17 +30,17 @@ RUN apt-get update && \
     apt-get clean && \
     apt-get autoremove
 
-USER jovyan
+USER ${NB_UID}
 
 # Install Conda Packages (Plotly, SageMath)
-RUN mamba create --yes -n sage sage python=3.9 && \
-    mamba install --yes "jupyterlab>=3" "ipywidgets>=7.6" && \
-    mamba install --yes -c conda-forge -c plotly "jupyterlab-drawio" \
+RUN mamba create --yes -n sage sage python=3.10 && \
+    mamba install --yes -c conda-forge -c plotly "sage" \
+    "jupyterlab-drawio" \
     "plotly" \
     "jupyterlab-spellchecker" \
     "jupyter-dash" \
     "xeus-cling" \
-    "openjdk=11" \
+    "openjdk" \
     "maven" \
     "ipython-sql" \
     "jupyterlab-lsp" \
