@@ -40,7 +40,7 @@ jobs:
     - name: Build, tag, and push image to Amazon ECR
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        REPOSITORY: jupyterhub
+        REPOSITORY: jhub-open-userimage
         IMAGE_TAG: ${{ github.sha }}
       run: |
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
