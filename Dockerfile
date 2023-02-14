@@ -24,6 +24,7 @@ RUN apt-get update && \
     zsh \
     vim \
     htop \
+    pulp \
     gfortran && \
     ldconfig && \
     apt-get autoclean && \
