@@ -24,13 +24,12 @@ RUN apt-get update && \
     zsh \
     vim \
     htop \
-    pulp \
+    python-pulp \
     gfortran && \
     ldconfig && \
     apt-get autoclean && \
     apt-get clean && \
-    apt-get autoremove
-
+    apt-get autoremove 
 USER ${NB_UID}
 
 # Install Conda Packages (Plotly, SageMath)
