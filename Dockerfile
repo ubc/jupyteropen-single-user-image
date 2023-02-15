@@ -24,7 +24,6 @@ RUN apt-get update && \
     zsh \
     vim \
     htop \
-    python-pulp \
     gfortran && \
     ldconfig && \
     apt-get autoclean && \
@@ -71,6 +70,7 @@ RUN mamba install --yes -c conda-forge \
     mamba clean --all -f -y
 
 RUN pip install nbgitpuller \
+    pulp \
     jupyterlab-git \
     jupyterlab-system-monitor \
     lckr-jupyterlab-variableinspector \
