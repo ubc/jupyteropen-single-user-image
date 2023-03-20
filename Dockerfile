@@ -51,23 +51,61 @@ RUN R -e 'require(devtools); \
     install_version("lisp", version = "0.1", repos = "http://cran.us.r-project.org", quiet = TRUE); \
     install_version("translate", version = "0.1.2", repos = "http://cran.us.r-project.org", quiet = TRUE)'
 
-RUN mamba install --yes -c conda-forge \
-    'r-stargazer' \
-    'r-quanteda' \
-    'r-quanteda.textmodels' \
-    'r-quanteda.textplots' \
-    'r-quanteda.textstats' \
+RUN mamba install --quiet --yes \
+    'gxx_linux-64' \
+    'gmp' \
+    'mpfr' \
+    'r-base' \
+    'r-essentials' \
+    'r-gmp' \
+    'r-irkernel' \
+    'r-plyr' \
+    'r-devtools' \
+    'r-dplyr' \
+    'r-ggplot2' \
+    'r-ggally' \
+    'r-hmisc' \
+    'r-tidyr' \
+    'r-languageserver' \
+    'r-lsmeans' \
+    'r-shiny' \
+    'r-rmarkdown' \
+    'r-forecast' \
+    'r-stringr' \
+    'r-stringi' \
+    'r-rsqlite' \
+    'r-reshape2' \
+    'r-nycflights13' \
+    'r-car' \
     'r-caret' \
-    'r-ggiraph' \
-    'r-ggextra' \
-    'r-isocodes' \
-    'r-urltools' \
-    'r-ggthemes' \
-    'r-modelsummary' \
-    'r-nsyllable' \
-    'r-proxyc' \
-    'r-tidytext' && \
-    mamba clean --all -f -y
+    'r-rcurl' \
+    'r-crayon' \
+    'r-testthat' \
+    'r-tidyverse' \
+    'r-randomforest' \
+    'r-janitor' \
+    'r-palmerpenguins' \
+    && mamba clean --all -f -y
+
+# RUN mamba install --yes -c conda-forge \
+#     'r-stargazer' \
+#     'r-quanteda' \
+#     'r-quanteda.textmodels' \
+#     'r-quanteda.textplots' \
+#     'r-quanteda.textstats' \
+#     'r-caret' \
+#     'r-ggiraph' \
+#     'r-ggextra' \
+#     'r-isocodes' \
+#     'r-urltools' \
+#     'r-ggthemes' \
+#     'r-modelsummary' \
+#     'r-nsyllable' \
+#     'r-proxyc' \
+#     'r-tidytext' && \
+#     mamba clean --all -f -y
+
+
 
 RUN pip install nbgitpuller \
     pulp \
