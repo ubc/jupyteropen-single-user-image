@@ -4,7 +4,7 @@
 ARG BASE_CONTAINER=jupyter/datascience-notebook:hub-3.1.0
 FROM $BASE_CONTAINER
 
-LABEL maintainer="Rahim Khoja <rahim.khoja@ubc.ca>"
+LABEL maintainer="Bala Rao <bsriniva@ubc.ca>"
 
 USER root
 
@@ -72,7 +72,7 @@ RUN mamba install --yes -c conda-forge \
     mamba clean --all -f -y
 
 
-
+RUN pip install --upgrade setuptools
 RUN pip install nbgitpuller \
     pulp \
     jupyterlab-git \
@@ -86,22 +86,26 @@ RUN pip install nbgitpuller \
     isort \
     jupyterlab_latex \
     jupyterlab-github \
-    mitosheet3 && \
-    pip install jupytext --upgrade
+    mitosheet3  \
+    plotly \
+    ipywidgets \
+    jupyterlab-spreadsheet-editor 
+#    jupyterlab_templates \
+RUN pip install jupytext --upgrade 
 
 
 RUN npm cache clean --force && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/jovyan
-
-RUN jupyter labextension install jupyterlab-plotly && \
-    jupyter labextension install @jupyter-widgets/jupyterlab-manager plotlywidget && \
-    jupyter labextension install @techrah/text-shortcuts && \
-    jupyter labextension install jupyterlab-spreadsheet && \
-    jupyter labextension install jupyterlab_templates && \
-    jupyter serverextension enable --py jupyterlab_templates && \
+RUN export NODE_OPTIONS=--max-old-space-size=4096
+# RUN jupyter labextension install jupyterlab-plotly && \
+# RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager plotlywidget && \
+#    jupyter labextension install @techrah/text-shortcuts && \
+#    jupyter labextension install jupyterlab-spreadsheet && \
+#    jupyter labextension install jupyterlab_templates && \
+RUN jupyter serverextension enable --py jupyterlab_templates && \
     jupyter serverextension enable nbgitpuller --sys-prefix && \
-    jupyter lab build
+    jupyter lab build --dev-build=False --minimize=False
 
 USER root
 
