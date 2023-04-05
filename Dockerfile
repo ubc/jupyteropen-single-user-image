@@ -90,7 +90,6 @@ RUN pip install nbgitpuller \
     plotly \
     ipywidgets \
     jupyterlab-spreadsheet-editor 
-#    jupyterlab_templates \
 RUN pip install jupytext --upgrade 
 
 
@@ -98,11 +97,6 @@ RUN npm cache clean --force && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/jovyan
 RUN export NODE_OPTIONS=--max-old-space-size=4096
-# RUN jupyter labextension install jupyterlab-plotly && \
-# RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager plotlywidget && \
-#    jupyter labextension install @techrah/text-shortcuts && \
-#    jupyter labextension install jupyterlab-spreadsheet && \
-#    jupyter labextension install jupyterlab_templates && \
 RUN jupyter serverextension enable --py jupyterlab_templates && \
     jupyter serverextension enable nbgitpuller --sys-prefix && \
     jupyter lab build --dev-build=False --minimize=False
