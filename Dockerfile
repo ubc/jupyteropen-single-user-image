@@ -2,6 +2,7 @@
 # sudo docker build --squash --no-cache -t 032401129069.dkr.ecr.ca-central-1.amazonaws.com/jupyterhub:jupyterlab-open .
 
 ARG BASE_CONTAINER=jupyter/datascience-notebook:hub-3.1.0
+#ARG BASE_CONTAINER=032401129069.dkr.ecr.ca-central-1.amazonaws.com/jupyterhub:jupyterlab-all
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Bala Rao <bsriniva@ubc.ca>"
@@ -88,8 +89,10 @@ RUN pip install nbgitpuller \
     jupyterlab-github \
     mitosheet3  \
     plotly \
-    ipywidgets \
-    jupyterlab-spreadsheet-editor 
+    ipywidgets==7.4.2 \
+    jupyterlab-spreadsheet-editor \
+    jupyterlab_widgets \
+    jupyterlab_templates
 RUN pip install jupytext --upgrade 
 
 
@@ -97,9 +100,9 @@ RUN npm cache clean --force && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/jovyan
 RUN export NODE_OPTIONS=--max-old-space-size=4096
-RUN jupyter serverextension enable --py jupyterlab_templates && \
-    jupyter serverextension enable nbgitpuller --sys-prefix && \
-    jupyter lab build --dev-build=False --minimize=False
+RUN  jupyter serverextension enable --py jupyterlab_templates && \
+     jupyter serverextension enable nbgitpuller --sys-prefix && \
+     jupyter lab build --dev-build=False --minimize=False
 
 USER root
 
