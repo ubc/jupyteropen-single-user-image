@@ -5,6 +5,7 @@ phases:
     run-as: root
     on-failure: ABORT |
     commands:
+      - df -h 
       - docker build -t 032401129069.dkr.ecr.ca-central-1.amazonaws.com/jhub-open-userimage:latest .
       - echo "build completed" && echo "authenticating to the ECR repo"
       - aws ecr get-login-password --profile saml --region ca-central-1 | docker login --username AWS --password-stdin 032401129069.dkr.ecr.ca-central-1.amazonaws.com
