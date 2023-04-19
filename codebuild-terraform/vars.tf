@@ -43,12 +43,12 @@ variable "buildenv_vpc" {
 }
 
 variable "buildenv_subnets" {
-  type = list
+  type    = list(any)
   default = ["subnet-x", "subnet-y"]
 }
 
 variable "buildenv_sg" {
-  type = list
+  type    = list(any)
   default = ["sg-x"]
 }
 
