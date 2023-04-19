@@ -1,13 +1,16 @@
 version: 0.2
 phases:
-
+  prebuild:
+    commands:
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - export REPOSITORY_URI=032401129069.dkr.ecr.ca-central-1.amazonaws.com/jhub-open-userimage
   build:
     run-as: root
     on-failure: ABORT |
     commands:
-      - df -h 
-      - docker build -t 032401129069.dkr.ecr.ca-central-1.amazonaws.com/jhub-open-userimage:latest .
+      - docker build -t  $REPOSITORY_URI:$IMAGE_TAG .
       - echo "build completed" && echo "authenticating to the ECR repo"
-      - aws ecr get-login-password --profile saml --region ca-central-1 | docker login --username AWS --password-stdin 032401129069.dkr.ecr.ca-central-1.amazonaws.com
+      - aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 032401129069.dkr.ecr.ca-central-1.amazonaws.com
       - echo "authenticating to ECR repo successful. Pushing image to the repo"
-      - docker push 032401129069.dkr.ecr.ca-central-1.amazonaws.com/jhub-open-userimage:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
