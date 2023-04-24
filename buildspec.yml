@@ -14,3 +14,5 @@ phases:
       - aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 032401129069.dkr.ecr.ca-central-1.amazonaws.com
       - echo "authenticating to ECR repo successful. Pushing image to the repo"
       - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo "calling github actions for e2e tests"
+      - curl --location --request POST 'https://api.github.com/repos/balarao/jupyteropen-single-user-image.github.io/actions/workflows/4476169/dispatches' --header 'authorization: token $GITHUB_TOKEN' --header 'Content-Type: application/json' --data-raw '{"event_type":"on-demand"}'
