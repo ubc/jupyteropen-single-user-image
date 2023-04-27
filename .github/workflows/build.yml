@@ -4,10 +4,10 @@ on:
   repository_dispatch:
     types: [on-demand]
   push:
-#    branches: [ "*" ]
-#    tags: [ "*" ]
+    branches: [ "*" ]
+    tags: [ "*" ]
   pull_request:
-#    branches: [ main ]
+    branches: [ main ]
       # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
