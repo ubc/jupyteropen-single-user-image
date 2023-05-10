@@ -53,7 +53,6 @@ RUN R -e 'require(devtools); \
     install_version("translate", version = "0.1.2", repos = "http://cran.us.r-project.org", quiet = TRUE)'
 
 # Install R packages
-
 RUN mamba install --yes -c conda-forge \
     'r-stargazer' \
     'r-quanteda' \
@@ -69,8 +68,11 @@ RUN mamba install --yes -c conda-forge \
     'r-modelsummary' \
     'r-nsyllable' \
     'r-proxyc' \
+#    'r-car' \
+#    'vtable-dumper' \
     'r-tidytext' && \
     mamba clean --all -f -y
+RUN mamba install --yes -c conda-forge r-car
 
 
 RUN pip install --upgrade setuptools
@@ -124,7 +126,8 @@ RUN /opt/conda/envs/sage/bin/sage -c "install_scripts('/usr/local/bin')" && \
     ln -s /usr/bin/sage /usr/bin/sagemath
 
 RUN jupyter kernelspec install $(/opt/conda/envs/sage/bin/sage -sh -c 'ls -d /opt/conda/envs/sage/share/jupyter/kernels/sagemath'); exit 0
-
+COPY widget_selection.py /opt/conda/lib/python3.10/site-packages/ipywidgets/widgets/
+COPY interaction.py /opt/conda/lib/python3.10/site-packages/ipywidgets/widgets/
 RUN chown -R jovyan:users /home/jovyan && \
     chmod -R 0777 /home/jovyan && \
     rm -rf /home/jovyan/*
