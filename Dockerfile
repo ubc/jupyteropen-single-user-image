@@ -5,6 +5,7 @@ ARG BASE_CONTAINER=jupyter/datascience-notebook:hub-3.1.0
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Bala Rao <bsriniva@ubc.ca>"
+LABEL maintainer="Ryoko <ryoko.norden@ubc.ca>"
 
 USER root
 
