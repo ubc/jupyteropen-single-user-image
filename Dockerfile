@@ -3,6 +3,7 @@
 
 ARG BASE_CONTAINER=jupyter/datascience-notebook:hub-3.1.0
 #ARG BASE_CONTAINER=032401129069.dkr.ecr.ca-central-1.amazonaws.com/jupyterhub:jupyterlab-all
+LABEL maintainer="Ryoko <ryoko.norden@ubc.ca>"
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Bala Rao <bsriniva@ubc.ca>"
