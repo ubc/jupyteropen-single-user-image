@@ -38,7 +38,7 @@ RUN mamba create --yes -n sage sage python=3.10 && \
     "sage=10.2" \
     "plotly" \
     "jupyterlab-spellchecker" \
-    "jupyter-dash" \
+    "dash" \
     "xeus-cling" \
     "openjdk" \
     "maven" \
