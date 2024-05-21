@@ -1,7 +1,7 @@
 # sudo docker kill $(sudo docker ps -q);  sudo docker rm $(sudo docker ps -a -q); sudo docker rmi $(sudo docker images -q)
 # sudo docker build --squash --no-cache -t 032401129069.dkr.ecr.ca-central-1.amazonaws.com/jupyterhub:jupyterlab-open .
 
-ARG BASE_CONTAINER=jupyter/datascience-notebook:hub-4.0.1
+ARG BASE_CONTAINER=quay.io/jupyter/datascience-notebook:hub-4.1.5
 #ARG BASE_CONTAINER=032401129069.dkr.ecr.ca-central-1.amazonaws.com/jupyterhub:jupyterlab-all
 FROM $BASE_CONTAINER
 
