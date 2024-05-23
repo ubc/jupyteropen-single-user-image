@@ -91,7 +91,7 @@ RUN pip install nbgitpuller \
     jupyterlab-github \
     mitosheet3  \
     plotly \
-    ipywidgets==7.6.5 \
+    ipywidgets \
     jupyterlab-spreadsheet-editor \
     jupyterlab_widgets \
     jupyterlab_templates
