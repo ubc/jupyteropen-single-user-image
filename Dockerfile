@@ -33,9 +33,9 @@ RUN apt-get update && \
 USER ${NB_UID}
 
 # Install Conda Packages (Plotly, SageMath)
-RUN mamba create --yes -n sage sage python=3.10 && \
+RUN mamba create --yes -n sage sage python=3.11 && \
     mamba install --yes -c conda-forge -c plotly \
-    "sage=10.2" \
+    "sage" \
     "plotly" \
     "jupyterlab-spellchecker" \
     "dash" \
