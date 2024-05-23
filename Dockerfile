@@ -126,8 +126,8 @@ RUN /opt/conda/envs/sage/bin/sage -c "install_scripts('/usr/local/bin')" && \
     ln -s /usr/bin/sage /usr/bin/sagemath
 
 RUN jupyter kernelspec install $(/opt/conda/envs/sage/bin/sage -sh -c 'ls -d /opt/conda/envs/sage/share/jupyter/kernels/sagemath'); exit 0
-COPY widget_selection.py /opt/conda/lib/python3.10/site-packages/ipywidgets/widgets/
-COPY interaction.py /opt/conda/lib/python3.10/site-packages/ipywidgets/widgets/
+COPY widget_selection.py /opt/conda/lib/python3.11/site-packages/ipywidgets/widgets/
+COPY interaction.py /opt/conda/lib/python3.11/site-packages/ipywidgets/widgets/
 RUN chown -R jovyan:users /home/jovyan && \
     chmod -R 0777 /home/jovyan && \
     rm -rf /home/jovyan/*
