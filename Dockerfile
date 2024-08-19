@@ -86,7 +86,10 @@ RUN pip install nbgitpuller \
     jupyterlab-github \
     jupyterlab-spreadsheet-editor \
     jupyterlab_templates \
-    otter-grader
+    otter-grader \
+    vl-convert-python \
+    "vegafusion[embed]" \
+    "vegafusion-jupyter[embed]"
 RUN pip install jupytext --upgrade
 
 
