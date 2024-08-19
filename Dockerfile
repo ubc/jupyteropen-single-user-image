@@ -34,11 +34,10 @@ USER ${NB_UID}
 
 # Install Conda Packages (Plotly, SageMath)
 RUN mamba create --yes -n sage sage python=3.11 && \
-    mamba install --yes -c conda-forge -c plotly \
+    mamba install --yes -c conda-forge \
     "sage" \
     "plotly" \
     "jupyterlab-spellchecker" \
-    "dash" \
     "xeus-cling" \
     "openjdk" \
     "maven" \
@@ -61,15 +60,15 @@ RUN mamba install --yes -c conda-forge \
     'r-quanteda.textstats' \
     'r-caret' \
     'r-ggiraph' \
-    'r-ggextra' \
+    'r-ggextra' && \
+    mamba clean --all -f -y
+RUN mamba install --yes -c conda-forge \
     'r-isocodes' \
     'r-urltools' \
     'r-ggthemes' \
     'r-modelsummary' \
     'r-nsyllable' \
     'r-proxyc' \
-#    'r-car' \
-#    'vtable-dumper' \
     'r-tidytext' && \
     mamba clean --all -f -y
 RUN mamba install --yes -c conda-forge r-car
@@ -78,23 +77,16 @@ RUN mamba install --yes -c conda-forge r-car
 RUN pip install --upgrade setuptools
 RUN pip install nbgitpuller \
     pulp \
-    jupyterlab-git \
-    jupyterlab-system-monitor \
-    jupyterlab_templates \
+    jupyter-resource-usage \
     jupyterlab-code-formatter \
-    nbdime \
     black \
     pandas_ta \
     ccxt \
     isort \
-    jupyterlab_latex \
     jupyterlab-github \
-    mitosheet3  \
-    plotly \
-    ipywidgets \
     jupyterlab-spreadsheet-editor \
-    jupyterlab_widgets \
-    jupyterlab_templates
+    jupyterlab_templates \
+    otter-grader
 RUN pip install jupytext --upgrade
 
 
@@ -102,9 +94,7 @@ RUN npm cache clean --force && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/jovyan
 RUN export NODE_OPTIONS=--max-old-space-size=4096
-RUN  jupyter serverextension enable --py jupyterlab_templates && \
-     jupyter serverextension enable nbgitpuller --sys-prefix && \
-     jupyter lab build --dev-build=False --minimize=False
+RUN  jupyter lab build --dev-build=False --minimize=False
 
 USER root
 
