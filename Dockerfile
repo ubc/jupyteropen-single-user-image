@@ -34,10 +34,11 @@ USER ${NB_UID}
 
 # Install Conda Packages (Plotly, SageMath)
 RUN mamba create --yes -n sage sage python=3.11 && \
-    mamba install --yes -c conda-forge \
+    mamba install --yes -c conda-forge -c plotly \
     "sage" \
     "plotly" \
     "jupyterlab-spellchecker" \
+    "dash" \
     "xeus-cling" \
     "openjdk" \
     "maven" \
