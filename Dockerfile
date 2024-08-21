@@ -30,7 +30,8 @@ RUN apt-get update && \
     apt-get autoclean && \
     apt-get clean && \
     apt-get autoremove
-USER ${NB_UID}
+
+USER jovyan
 
 # Install Conda Packages (Plotly, SageMath)
 RUN mamba create --yes -n sage sage python=3.11 && \
@@ -51,7 +52,7 @@ RUN R -e 'require(devtools); \
     install_version("ggiraphExtra", repos = "http://cran.us.r-project.org", quiet = TRUE); \
     install_version("lisp", version = "0.1", repos = "http://cran.us.r-project.org", quiet = TRUE); \
     install_version("translate", version = "0.1.2", repos = "http://cran.us.r-project.org", quiet = TRUE)'
-
+    
 # Install R packages
 RUN mamba install --yes -c conda-forge \
     'r-stargazer' \
