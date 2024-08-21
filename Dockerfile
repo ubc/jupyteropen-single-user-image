@@ -31,7 +31,7 @@ RUN apt-get update && \
     apt-get clean && \
     apt-get autoremove
 
-USER jovyan
+USER ${NB_UID}
 
 # Install Conda Packages (Plotly, SageMath)
 RUN mamba create --yes -n sage sage python=3.11 && \
@@ -62,9 +62,7 @@ RUN mamba install --yes -c conda-forge \
     'r-quanteda.textstats' \
     'r-caret' \
     'r-ggiraph' \
-    'r-ggextra' && \
-    mamba clean --all -f -y
-RUN mamba install --yes -c conda-forge \
+    'r-ggextra' \
     'r-isocodes' \
     'r-urltools' \
     'r-ggthemes' \
@@ -99,7 +97,9 @@ RUN npm cache clean --force && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/jovyan
 RUN export NODE_OPTIONS=--max-old-space-size=4096
-RUN  jupyter lab build --dev-build=False --minimize=False
+RUN  jupyter server extension enable --py jupyterlab_templates && \
+     jupyter server extension enable nbgitpuller --sys-prefix && \
+     jupyter lab build --dev-build=False --minimize=False
 
 USER root
 
