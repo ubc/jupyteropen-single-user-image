@@ -25,6 +25,10 @@ RUN apt-get update && \
     zsh \
     vim \
     htop \
+#    build-essential \
+#    libcurl4-openssl-dev \
+#    libssl-dev \
+#    libxml2-dev \
     gfortran && \
     ldconfig && \
     apt-get autoclean && \
@@ -49,10 +53,10 @@ RUN mamba create --yes -n sage sage python=3.11 && \
     "jupyter_bokeh"
 
 RUN R -e 'require(devtools); \
-    install_version("ggiraphExtra", repos = "http://cran.us.r-project.org", quiet = TRUE); \
-    install_version("lisp", version = "0.1", repos = "http://cran.us.r-project.org", quiet = TRUE); \
-    install_version("translate", version = "0.1.2", repos = "http://cran.us.r-project.org", quiet = TRUE)'
-    
+    devtools::install_github("cardiomoon/ggiraphExtra"); \
+    install.packages("https://cran.r-project.org/src/contrib/Archive/lisp/lisp_0.1.tar.gz", repos = NULL, type = "source", quiet = TRUE); \
+    install.packages("https://cran.r-project.org/src/contrib/Archive/translate/translate_0.1.2.tar.gz", repos = NULL, type = "source", quiet = TRUE)'
+
 # Install R packages
 RUN mamba install --yes -c conda-forge \
     'r-stargazer' \
@@ -69,9 +73,10 @@ RUN mamba install --yes -c conda-forge \
     'r-modelsummary' \
     'r-nsyllable' \
     'r-proxyc' \
-    'r-tidytext' && \
+    'r-tidytext' \
+    'r-car' && \
     mamba clean --all -f -y
-RUN mamba install --yes -c conda-forge r-car
+#RUN mamba install --yes -c conda-forge r-car
 
 
 RUN pip install --upgrade setuptools
@@ -82,8 +87,8 @@ RUN pip install nbgitpuller \
     black \
     pandas_ta \
     ccxt \
-    isort \
-    jupyterlab-github \
+#    isort \
+#    jupyterlab-github \
     jupyterlab-spreadsheet-editor \
     jupyterlab_templates \
     otter-grader \
@@ -92,14 +97,13 @@ RUN pip install nbgitpuller \
     "vegafusion-jupyter[embed]"
 RUN pip install jupytext --upgrade
 
-
 RUN npm cache clean --force && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/jovyan
 RUN export NODE_OPTIONS=--max-old-space-size=4096
-RUN  jupyter server extension enable --py jupyterlab_templates && \
-     jupyter server extension enable nbgitpuller --sys-prefix && \
-     jupyter lab build --dev-build=False --minimize=False
+#RUN  jupyter server extension enable --py jupyterlab_templates && \
+#     jupyter server extension enable nbgitpuller --sys-prefix && \
+#     jupyter lab build --dev-build=False --minimize=False
 
 USER root
 
