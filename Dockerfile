@@ -25,10 +25,10 @@ RUN apt-get update && \
     zsh \
     vim \
     htop \
-#    build-essential \
-#    libcurl4-openssl-dev \
-#    libssl-dev \
-#    libxml2-dev \
+    build-essential \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    libxml2-dev \
     gfortran && \
     ldconfig && \
     apt-get autoclean && \
@@ -76,7 +76,6 @@ RUN mamba install --yes -c conda-forge \
     'r-tidytext' \
     'r-car' && \
     mamba clean --all -f -y
-#RUN mamba install --yes -c conda-forge r-car
 
 
 RUN pip install --upgrade setuptools
@@ -101,9 +100,6 @@ RUN npm cache clean --force && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/jovyan
 RUN export NODE_OPTIONS=--max-old-space-size=4096
-#RUN  jupyter server extension enable --py jupyterlab_templates && \
-#     jupyter server extension enable nbgitpuller --sys-prefix && \
-#     jupyter lab build --dev-build=False --minimize=False
 
 USER root
 
