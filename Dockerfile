@@ -1,7 +1,8 @@
 # sudo docker kill $(sudo docker ps -q);  sudo docker rm $(sudo docker ps -a -q); sudo docker rmi $(sudo docker images -q)
 # sudo docker build --squash --no-cache -t 032401129069.dkr.ecr.ca-central-1.amazonaws.com/jupyterhub:jupyterlab-open .
 
-ARG BASE_CONTAINER=jupyter/datascience-notebook:hub-3.1.0
+ARG BASE_CONTAINER=quay.io/jupyter/datascience-notebook:hub-4.1.5
+#ARG BASE_CONTAINER=032401129069.dkr.ecr.ca-central-1.amazonaws.com/jupyterhub:jupyterlab-all
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Bala Rao <bsriniva@ubc.ca>"
@@ -25,20 +26,25 @@ RUN apt-get update && \
     zsh \
     vim \
     htop \
+    build-essential \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    libxml2-dev \
     gfortran && \
     ldconfig && \
     apt-get autoclean && \
     apt-get clean && \
-    apt-get autoremove 
+    apt-get autoremove
+
 USER ${NB_UID}
 
 # Install Conda Packages (Plotly, SageMath)
-RUN mamba create --yes -n sage sage python=3.10 && \
-    mamba install --yes -c conda-forge -c plotly "sage" \
-    "jupyterlab-drawio" \
+RUN mamba create --yes -n sage sage python=3.11 && \
+    mamba install --yes -c conda-forge -c plotly \
+    "sage" \
     "plotly" \
     "jupyterlab-spellchecker" \
-    "jupyter-dash" \
+    "dash" \
     "xeus-cling" \
     "openjdk" \
     "maven" \
@@ -48,12 +54,11 @@ RUN mamba create --yes -n sage sage python=3.10 && \
     "jupyter_bokeh"
 
 RUN R -e 'require(devtools); \
-    install_version("ggiraphExtra", repos = "http://cran.us.r-project.org", quiet = TRUE); \
-    install_version("lisp", version = "0.1", repos = "http://cran.us.r-project.org", quiet = TRUE); \
-    install_version("translate", version = "0.1.2", repos = "http://cran.us.r-project.org", quiet = TRUE)'
+    devtools::install_github("cardiomoon/ggiraphExtra"); \
+    install.packages("https://cran.r-project.org/src/contrib/Archive/lisp/lisp_0.1.tar.gz", repos = NULL, type = "source", quiet = TRUE); \
+    install.packages("https://cran.r-project.org/src/contrib/Archive/translate/translate_0.1.2.tar.gz", repos = NULL, type = "source", quiet = TRUE)'
 
 # Install R packages
-
 RUN mamba install --yes -c conda-forge \
     'r-stargazer' \
     'r-quanteda' \
@@ -69,38 +74,33 @@ RUN mamba install --yes -c conda-forge \
     'r-modelsummary' \
     'r-nsyllable' \
     'r-proxyc' \
-    'r-tidytext' && \
+    'r-tidytext' \
+    'r-car' && \
     mamba clean --all -f -y
 
 
 RUN pip install --upgrade setuptools
 RUN pip install nbgitpuller \
     pulp \
-    jupyterlab-git \
-    jupyterlab-system-monitor \
-    jupyterlab_templates \
+    jupyter-resource-usage \
     jupyterlab-code-formatter \
-    nbdime \
     black \
     pandas_ta \
     ccxt \
-    isort \
-    jupyterlab_latex \
-    jupyterlab-github \
-    mitosheet3  \
-    plotly \
-    ipywidgets \
-    jupyterlab-spreadsheet-editor 
-RUN pip install jupytext --upgrade 
-
+#    isort \
+#    jupyterlab-github \
+    jupyterlab-spreadsheet-editor \
+    jupyterlab_templates \
+    otter-grader \
+    vl-convert-python \
+    "vegafusion[embed]" \
+    "vegafusion-jupyter[embed]"
+RUN pip install jupytext --upgrade
 
 RUN npm cache clean --force && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/jovyan
 RUN export NODE_OPTIONS=--max-old-space-size=4096
-RUN jupyter serverextension enable --py jupyterlab_templates && \
-    jupyter serverextension enable nbgitpuller --sys-prefix && \
-    jupyter lab build --dev-build=False --minimize=False
 
 USER root
 
@@ -122,7 +122,8 @@ RUN /opt/conda/envs/sage/bin/sage -c "install_scripts('/usr/local/bin')" && \
     ln -s /usr/bin/sage /usr/bin/sagemath
 
 RUN jupyter kernelspec install $(/opt/conda/envs/sage/bin/sage -sh -c 'ls -d /opt/conda/envs/sage/share/jupyter/kernels/sagemath'); exit 0
-
+COPY widget_selection.py /opt/conda/lib/python3.11/site-packages/ipywidgets/widgets/
+COPY interaction.py /opt/conda/lib/python3.11/site-packages/ipywidgets/widgets/
 RUN chown -R jovyan:users /home/jovyan && \
     chmod -R 0777 /home/jovyan && \
     rm -rf /home/jovyan/*

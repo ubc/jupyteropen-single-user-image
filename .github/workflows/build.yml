@@ -14,17 +14,17 @@ on:
 jobs:
   build:
     name: Build Image
-    runs-on: ubuntu-latest
+    runs-on: self-hosted 
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:
       id-token: write
       contents: read
-    steps:
+    steps:         
     - name: Check out code
       uses: actions/checkout@v3
 
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1-node16
+      uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: ${{ secrets.AWS_REGION }}
         role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github
