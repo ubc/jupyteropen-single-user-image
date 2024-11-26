@@ -1,7 +1,7 @@
 # sudo docker kill $(sudo docker ps -q);  sudo docker rm $(sudo docker ps -a -q); sudo docker rmi $(sudo docker images -q)
 # sudo docker build --squash --no-cache -t 032401129069.dkr.ecr.ca-central-1.amazonaws.com/jupyterhub:jupyterlab-open .
 
-ARG BASE_CONTAINER=quay.io/jupyter/datascience-notebook:hub-4.1.5
+ARG BASE_CONTAINER=quay.io/jupyter/datascience-notebook:hub-5.2.0
 #ARG BASE_CONTAINER=032401129069.dkr.ecr.ca-central-1.amazonaws.com/jupyterhub:jupyterlab-all
 FROM $BASE_CONTAINER
 
@@ -26,10 +26,11 @@ RUN apt-get update && \
     zsh \
     vim \
     htop \
-    build-essential \
     libcurl4-openssl-dev \
     libssl-dev \
     libxml2-dev \
+# future version of base image will remove nodejs, uncomment below after upgrade
+#    npm \
     gfortran && \
     ldconfig && \
     apt-get autoclean && \
@@ -41,11 +42,10 @@ USER ${NB_UID}
 # Install Conda Packages (Plotly, SageMath)
 RUN mamba create --yes -n sage sage python=3.11 && \
     mamba install --yes -c conda-forge -c plotly \
-    "sage" \
     "plotly" \
     "jupyterlab-spellchecker" \
     "dash" \
-    "xeus-cling" \
+#    "xeus-cling" \
     "openjdk" \
     "maven" \
     "ipython-sql" \
@@ -61,20 +61,20 @@ RUN R -e 'require(devtools); \
 # Install R packages
 RUN mamba install --yes -c conda-forge \
     'r-stargazer' \
-    'r-quanteda' \
-    'r-quanteda.textmodels' \
-    'r-quanteda.textplots' \
-    'r-quanteda.textstats' \
+#    'r-quanteda' \
+#    'r-quanteda.textmodels' \
+#    'r-quanteda.textplots' \
+#    'r-quanteda.textstats' \
     'r-caret' \
-    'r-ggiraph' \
+#    'r-ggiraph' \
     'r-ggextra' \
     'r-isocodes' \
     'r-urltools' \
     'r-ggthemes' \
     'r-modelsummary' \
     'r-nsyllable' \
-    'r-proxyc' \
-    'r-tidytext' \
+#    'r-proxyc' \
+#    'r-tidytext' \
     'r-car' && \
     mamba clean --all -f -y
 
