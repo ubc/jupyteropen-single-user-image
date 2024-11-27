@@ -104,9 +104,10 @@ RUN export NODE_OPTIONS=--max-old-space-size=4096
 
 USER root
 
-RUN npm install -g --unsafe-perm ijavascript && ijsinstall --hide-undefined --install=global
+# Removed as the ijavascript has not been updated for more than 2 years
+#RUN npm install -g --unsafe-perm ijavascript && ijsinstall --hide-undefined --install=global
 
-RUN npm install -g --unsafe-perm itypescript && its --ts-hide-undefined --install=global
+#RUN npm install -g --unsafe-perm itypescript && its --ts-hide-undefined --install=global
 
 # Install Java kernel
 RUN wget -O /opt/ijava-kernel.zip https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-1.3.0.zip && \
