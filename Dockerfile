@@ -118,8 +118,9 @@ RUN wget -O /opt/ijava-kernel.zip https://github.com/SpencerPark/IJava/releases/
 
 ENV SAGE_ROOT=/opt/conda/envs/sage/
 
-RUN /opt/conda/envs/sage/bin/sage -c "install_scripts('/usr/local/bin')" && \
-    ln -s "/opt/conda/envs/sage/bin/sage" /usr/bin/sage && \
+# install_scripts is deprecated
+# RUN /opt/conda/envs/sage/bin/sage -c "install_scripts('/usr/local/bin')" && \
+RUN ln -s "/opt/conda/envs/sage/bin/sage" /usr/bin/sage && \
     ln -s /usr/bin/sage /usr/bin/sagemath
 
 RUN jupyter kernelspec install $(/opt/conda/envs/sage/bin/sage -sh -c 'ls -d /opt/conda/envs/sage/share/jupyter/kernels/sagemath'); exit 0
