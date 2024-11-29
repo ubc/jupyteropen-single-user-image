@@ -125,6 +125,9 @@ RUN ln -s "/opt/conda/envs/sage/bin/sage" /usr/bin/sage && \
     ln -s /usr/bin/sage /usr/bin/sagemath
 
 RUN jupyter kernelspec install $(/opt/conda/envs/sage/bin/sage -sh -c 'ls -d /opt/conda/envs/sage/share/jupyter/kernels/sagemath'); exit 0
+
+RUN curl -fsSL https://deno.land/install.sh | bash -s -- -y && /home/jovyan/.deno/bin/deno jupyter --unstable --install
+
 COPY widget_selection.py /opt/conda/lib/python3.11/site-packages/ipywidgets/widgets/
 COPY interaction.py /opt/conda/lib/python3.11/site-packages/ipywidgets/widgets/
 RUN chown -R jovyan:users /home/jovyan && \
