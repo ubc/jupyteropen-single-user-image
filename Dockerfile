@@ -98,8 +98,7 @@ RUN pip install nbgitpuller \
     "vegafusion-jupyter[embed]"
 RUN pip install jupytext --upgrade
 
-RUN npm cache clean --force && \
-    fix-permissions $CONDA_DIR && \
+RUN fix-permissions $CONDA_DIR && \
     fix-permissions /home/jovyan
 RUN export NODE_OPTIONS=--max-old-space-size=4096
 
