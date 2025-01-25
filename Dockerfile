@@ -51,6 +51,7 @@ RUN mamba create --yes -n sage sage=10.4 python=3.11 && \
     "maven" \
     "ipython-sql" \
     "jupyterhub-singleuser" \
+    "dash-jupyterlab" \
     "jupyterlab-lsp" \
     "jupyter-lsp-python" \
     "jupyter_bokeh"
