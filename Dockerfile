@@ -44,7 +44,7 @@ RUN mamba create --yes -n sage sage=10.4 python=3.11 && \
     mamba install --yes -c conda-forge -c plotly \
     "plotly" \
     "jupyterlab-spellchecker" \
-    # "dash" \
+    "dash" \
     # installing xeus-cling will fail on arm64 platform
     "xeus-cling" \
     "openjdk" \
@@ -99,7 +99,9 @@ RUN pip install nbgitpuller \
     "vegafusion-jupyter[embed]"
 RUN pip install jupytext --upgrade
 
-RUN fix-permissions $CONDA_DIR && \
+# run jupyter lab build for jupyterlab-dash integration. prompted after logging in
+RUN jupyter lab build && \
+    fix-permissions $CONDA_DIR && \
     fix-permissions /home/jovyan
 RUN export NODE_OPTIONS=--max-old-space-size=4096
 
