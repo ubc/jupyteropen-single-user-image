@@ -102,7 +102,6 @@ RUN pip install jupytext --upgrade
 # run jupyter lab build for jupyterlab-dash integration. prompted after logging in
 RUN jupyter lab build && \
     jupyter lab clean && \
-    jlpm cache clean && \
     npm cache clean --force && \
     rm -rf $HOME/.node-gyp && \
     rm -rf $HOME/.local && \
