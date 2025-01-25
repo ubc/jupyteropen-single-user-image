@@ -44,14 +44,13 @@ RUN mamba create --yes -n sage sage=10.4 python=3.11 && \
     mamba install --yes -c conda-forge -c plotly \
     "plotly" \
     "jupyterlab-spellchecker" \
-    "dash" \
+    # "dash" \
     # installing xeus-cling will fail on arm64 platform
     "xeus-cling" \
     "openjdk" \
     "maven" \
     "ipython-sql" \
     "jupyterhub-singleuser" \
-    "dash-jupyterlab" \
     "jupyterlab-lsp" \
     "jupyter-lsp-python" \
     "jupyter_bokeh"
