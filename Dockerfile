@@ -140,7 +140,7 @@ RUN chown -R jovyan:users /home/jovyan && \
     chmod -R 0777 /home/jovyan && \
     rm -rf /home/jovyan/* && \
     # remove LC_ALL to workaround warning issue: https://github.com/r-lib/testthat/issues/1925
-    echo "LC_ALL=" >> /etc/environment
+    echo "LC_ALL=" >> /opt/conda/lib/R/etc/Renviron
 
 USER jovyan
 
