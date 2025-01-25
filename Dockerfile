@@ -138,7 +138,9 @@ COPY widget_selection.py /opt/conda/lib/python3.11/site-packages/ipywidgets/widg
 COPY interaction.py /opt/conda/lib/python3.11/site-packages/ipywidgets/widgets/
 RUN chown -R jovyan:users /home/jovyan && \
     chmod -R 0777 /home/jovyan && \
-    rm -rf /home/jovyan/*
+    rm -rf /home/jovyan/* && \
+    # remove LC_ALL to workaround warning issue: https://github.com/r-lib/testthat/issues/1925
+    echo "LC_ALL=" >> /etc/environment
 
 USER jovyan
 
