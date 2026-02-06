@@ -36,7 +36,7 @@ RUN apt-get update && \
     libpng-dev \
     libjpeg-dev \
     gfortran \
-    ldconfig \
+    ldconfig && \
     apt-get autoclean && \
     apt-get clean && \
     apt-get autoremove
