@@ -29,8 +29,12 @@ RUN apt-get update && \
     libcurl4-openssl-dev \
     libssl-dev \
     libxml2-dev \
-# future version of base image will remove nodejs, uncomment below after upgrade
-#    npm \
+    npm \
+    nodejs \
+    libcairo2-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libjpeg-dev
     gfortran && \
     ldconfig && \
     apt-get autoclean && \
