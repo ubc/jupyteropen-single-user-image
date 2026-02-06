@@ -35,8 +35,8 @@ RUN apt-get update && \
     libfreetype6-dev \
     libpng-dev \
     libjpeg-dev
-    gfortran && \
-    ldconfig && \
+    gfortran \
+    ldconfig \
     apt-get autoclean && \
     apt-get clean && \
     apt-get autoremove
