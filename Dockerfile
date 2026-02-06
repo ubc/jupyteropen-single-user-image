@@ -34,7 +34,7 @@ RUN apt-get update && \
     libcairo2-dev \
     libfreetype6-dev \
     libpng-dev \
-    libjpeg-dev
+    libjpeg-dev \
     gfortran \
     ldconfig \
     apt-get autoclean && \
