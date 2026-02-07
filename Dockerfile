@@ -29,8 +29,6 @@ RUN apt-get update && \
     libcurl4-openssl-dev \
     libssl-dev \
     libxml2-dev \
-    npm \
-    nodejs \
     libcairo2-dev \
     libfreetype6-dev \
     libpng-dev \
@@ -83,6 +81,8 @@ RUN mamba install --yes -c conda-forge \
     'r-car' && \
     mamba clean --all -f -y
 
+# Install NodeJS. Needed for jupyter lab build
+RUN mamba install -c conda-forge 'nodejs>=20.0.0' 
 
 RUN pip install --upgrade setuptools
 RUN pip install nbgitpuller \
