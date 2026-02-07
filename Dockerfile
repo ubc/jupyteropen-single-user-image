@@ -14,8 +14,8 @@ USER root
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     dvipng \
-    ffmpeg \
-    imagemagick \
+    #ffmpeg \
+    #imagemagick \
     texlive \
     tk tk-dev \
     jq \
