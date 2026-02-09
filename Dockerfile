@@ -34,9 +34,10 @@ RUN apt-get update && \
     libpng-dev \
     libjpeg-dev \
     gfortran && \
+    apt-get remove -y ffmpeg && \
+    apt-get autoremove -y && \
     apt-get autoclean && \
-    apt-get clean && \
-    apt-get autoremove
+    apt-get clean
 
 USER ${NB_UID}
 
